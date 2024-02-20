@@ -12,6 +12,7 @@ pip install --platform manylinux2014_x86_64 --target=lambda_function_code --impl
 ```
 
 Uploading the webapi data to s3
+
 ![4](https://github.com/Rajdeep-Sonawane171/aws-glue-date-pipeline-main/assets/113442602/eb53e4b4-98a0-4aee-98ab-05166e4a8229)
 
 Integrating data from s3 to DynamoDB
