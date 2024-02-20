@@ -19,7 +19,7 @@ job = Job(glueContext)
 job.init(args['JOB_NAME'], args)
 
 #declaring constant variables
-BUCKET_NAME="data327030"
+BUCKET_NAME="awsetldata"
 DYNAMODB_TABLE_NAME="fc_data"
 INPUT_FILE_PATH=f"s3://{BUCKET_NAME}/inbox/*json"
 
