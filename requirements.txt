@@ -1,1 +1,4 @@
 pymongo[srv]
+requests
+certifi
+Boto3
