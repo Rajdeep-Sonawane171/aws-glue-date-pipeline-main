@@ -5,15 +5,15 @@ import logging
 import os
 import boto3
 import datetime
-import os
 import requests
 
 ca = certifi.where()
-import os
+
 DATABASE_NAME = os.getenv("DATABASE_NAME")
 COLLECTION_NAME = os.getenv("COLLECTION_NAME")
 MONGODB_URL = os.getenv("MONGODB_URL")
 BUCKET_NAME=os.getenv("BUCKET_NAME")
+HEADER=({'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36','Accept-Language': 'en-US, en;q=0.5'})
 
 DATA_SOURCE_URL = f"https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/" \
                   f"?date_received_max=<todate>&date_received_min=<fromdate>" \
@@ -21,7 +21,7 @@ DATA_SOURCE_URL = f"https://www.consumerfinance.gov/data-research/consumer-compl
 client = pymongo.MongoClient(MONGODB_URL, tlsCAFile=ca)
 
 def get_from_date_to_date():
-    from_date = "2023-01-01"
+    from_date = "2024-02-15"
     from_date = datetime.datetime.strptime(from_date, "%Y-%m-%d")
 
     if COLLECTION_NAME in client[DATABASE_NAME].list_collection_names():
@@ -55,7 +55,7 @@ def lambda_handler(event, context):
             'body': json.dumps('Pipeline has already downloaded all data upto yesterday')
         }
     url = DATA_SOURCE_URL.replace("<todate>", to_date).replace("<fromdate>", from_date)
-    data = requests.get(url, params={'User-agent': f'your bot '})
+    data = requests.get(url, HEADER)
 
     finance_complaint_data = list(map(lambda x: x["_source"],
                                     filter(lambda x: "_source" in x.keys(),
